@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { formatDistanceToNow } from 'date-fns'
 import { ptBR } from 'date-fns/locale'
 import { ArrowRight, Search, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { approveOrder } from '@/api/approve-order'
 import { cancelOrder } from '@/api/cancel-order'
@@ -21,6 +21,8 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
   const [isDetailsOpen, setIsDetailsOpen] = useState(false)
 
   const queryClient = useQueryClient()
+
+  useEffect(() => console.log(order), [order])
 
   function updateOrderStatusOnCache(orderId: string, status: OrderStatus) {
     const ordersListCache = queryClient.getQueriesData<GetOrdersResponse>({
@@ -113,10 +115,10 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
       <TableCell>
         {order.status === 'pending' && (
           <Button
-            onClick={() => approveOrderFn({ orderId: order.orderId })}
-            disabled={isApprovingOrder}
             variant="outline"
+            disabled={isApprovingOrder}
             size="xs"
+            onClick={() => approveOrderFn({ orderId: order.orderId })}
           >
             <ArrowRight className="mr-2 h-3 w-3" />
             Aprovar
@@ -125,10 +127,10 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
 
         {order.status === 'processing' && (
           <Button
-            onClick={() => dispatchOrderFn({ orderId: order.orderId })}
-            disabled={isDispatchingOrder}
             variant="outline"
+            disabled={isDispatchingOrder}
             size="xs"
+            onClick={() => dispatchOrderFn({ orderId: order.orderId })}
           >
             <ArrowRight className="mr-2 h-3 w-3" />
             Em Entrega
@@ -137,10 +139,10 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
 
         {order.status === 'delivering' && (
           <Button
-            onClick={() => deliverOrderFn({ orderId: order.orderId })}
-            disabled={isDeliveringOrder}
             variant="outline"
+            disabled={isDeliveringOrder}
             size="xs"
+            onClick={() => deliverOrderFn({ orderId: order.orderId })}
           >
             <ArrowRight className="mr-2 h-3 w-3" />
             Entregue
@@ -149,13 +151,13 @@ export function OrderTableRow({ order }: OrderTableRowProps) {
       </TableCell>
       <TableCell>
         <Button
+          variant="ghost"
           disabled={
             !['pending', 'processing'].includes(order.status) ||
             isCancelingOrder
           }
-          onClick={() => cancelOrderFn({ orderId: order.orderId })}
-          variant="ghost"
           size="xs"
+          onClick={() => cancelOrderFn({ orderId: order.orderId })}
         >
           <X className="mr-2 h-3 w-3" /> Cancelar
         </Button>
