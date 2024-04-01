@@ -32,16 +32,6 @@ test('sign in with error', async ({ page }) => {
   expect(toast).toBeVisible()
 })
 
-// test('navigate to new restaurant page', async ({ page }) => {
-//   await page.goto('/sign-in', { waitUntil: 'networkidle' })
-
-//   await page.getByRole('link', { name: 'Novo estabelecimento' }).click()
-
-//   expect(page.url()).toContain('/sign-up')
-
-//   // await page.waitForTimeout(2000)  read comment in line 15
-// })
-
 test('navigate to login page', async ({ page }) => {
   await page.goto('/sign-up', { waitUntil: 'networkidle' })
 
