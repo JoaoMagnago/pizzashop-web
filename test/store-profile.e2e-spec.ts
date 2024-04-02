@@ -21,5 +21,7 @@ test('update profile successfully', async ({ page }) => {
 
   await page.waitForTimeout(200)
 
-  expect(page.getByRole('button', { name: 'Rocket Pizza' })).toBeInViewport()
+  await expect(
+    page.getByRole('button', { name: 'Rocket Pizza' }),
+  ).toBeInViewport()
 })

@@ -12,9 +12,7 @@ test('sign in successfully', async ({ page }) => {
 
   const toast = page.getByText('Restaurante cadastrado com sucesso!')
 
-  expect(toast).toBeVisible()
-
-  // await page.waitForTimeout(2000) is a workaround for a current bug that shows a blank page at the end of the test
+  await expect(toast).toBeVisible()
 })
 
 test('sign in with error', async ({ page }) => {
@@ -29,7 +27,7 @@ test('sign in with error', async ({ page }) => {
 
   const toast = page.getByText('Erro ao cadastrar restaurante.')
 
-  expect(toast).toBeVisible()
+  await expect(toast).toBeVisible()
 })
 
 test('navigate to login page', async ({ page }) => {
@@ -38,6 +36,4 @@ test('navigate to login page', async ({ page }) => {
   await page.getByRole('link', { name: 'Fazer login' }).click()
 
   expect(page.url()).toContain('/sign-in')
-
-  // await page.waitForTimeout(2000)  read comment in line 15
 })

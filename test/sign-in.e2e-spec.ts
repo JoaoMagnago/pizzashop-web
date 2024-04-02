@@ -10,9 +10,7 @@ test('sign in successfully', async ({ page }) => {
     'Enviamos um link de autenticação para o seu e-mail.',
   )
 
-  expect(toast).toBeVisible()
-
-  // await page.waitForTimeout(2000) is a workaround for a current bug that shows a blank page at the end of the test
+  await expect(toast).toBeVisible()
 })
 
 test('sign in with wrong credentials', async ({ page }) => {
@@ -23,9 +21,7 @@ test('sign in with wrong credentials', async ({ page }) => {
 
   const toast = page.getByText('Credenciais inválidas.')
 
-  expect(toast).toBeVisible()
-
-  // await page.waitForTimeout(2000)  read comment in line 15
+  await expect(toast).toBeVisible()
 })
 
 test('navigate to new restaurant page', async ({ page }) => {
@@ -34,6 +30,4 @@ test('navigate to new restaurant page', async ({ page }) => {
   await page.getByRole('link', { name: 'Novo estabelecimento' }).click()
 
   expect(page.url()).toContain('/sign-up')
-
-  // await page.waitForTimeout(2000)  read comment in line 15
 })
